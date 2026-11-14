@@ -4,7 +4,8 @@
 An ESP32-based IoT Smart Air Quality Monitoring System featuring offline monitoring, a real-time web dashboard, environmental sensors, live charts, and CSV data logging.
 
 <p align="center">
-  <img src="assets/dashboard-preview/live-dashboard-display.jpg" alt="Smart AQI Monitor Working Dashboard" width="850">
+  ### 🖥️ Live AQI Dashboard
+![Smart AQI Dashboard](assets/dashboard-preview/live-dashboard-display.jpg)
 </p>
 
 <p align="center">
