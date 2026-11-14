@@ -1,16 +1,8 @@
-
 # 🌿 Smart AQI Monitoring System
 
 An ESP32-based IoT Smart Air Quality Monitoring System featuring offline monitoring, a real-time web dashboard, environmental sensors, live charts, and CSV data logging.
 
-<p align="center">
-  ### 🖥️ Live AQI Dashboard
-![Smart AQI Dashboard](assets/dashboard-preview/live-dashboard-display.jpg)
-</p>
-
-<p align="center">
-  <b>Designed and Developed by Arpit Kumar Saini</b>
-</p>
+**Designed and Developed by Arpit Kumar Saini**
 
 ---
 
@@ -38,11 +30,24 @@ Sensor readings are transmitted using WebSocket communication, displayed through
 - Sensor connection status indicators
 - ESP32 memory monitoring
 
-## 🖥️ Working Dashboard
+---
 
-The project dashboard displays environmental readings and graphical trends in a single interface.
 
-![Working Dashboard](assets/dashboard-preview/live-dashboard-display.jpg)
+## 📸 Project Gallery
+
+### 🖥️ Live AQI Dashboard
+
+![Smart AQI Dashboard](assests/dashboard-preview/live-dashboard-display.jpg)
+
+### 🔧 Internal Hardware Setup
+
+![Internal Hardware Setup](assests/hardware-setup/internal-hardware-setup.jpg)
+
+### ⚡ System Wiring Diagram
+
+![Smart AQI Circuit Diagram](assests/circuit-diagrams/system-wiring-diagram.png)
+
+---
 
 ## 🔧 Hardware Components
 
@@ -56,19 +61,7 @@ The project dashboard displays environmental readings and graphical trends in a 
 | Android TV Box | Dashboard display platform |
 | Power Supply | System power |
 
-## 🔌 Circuit Diagram
-
-The following diagram illustrates the system architecture and sensor connections.
-
-![Smart AQI Circuit Diagram](assets/circuit-diagrams/system-wiring-diagram.png)
-
-## 🏗️ Hardware Implementation
-
-The complete system is assembled inside a custom enclosure with the monitor, controller, power components and sensor connections.
-
-![Internal Hardware Setup](assets/hardware-setup/internal-hardware-setup.jpg)
-
-## 📡 ESP32 Pin Configuration
+## 🔌 ESP32 Pin Configuration
 
 | Sensor | ESP32 Pin |
 |---|---|
@@ -83,7 +76,9 @@ The complete system is assembled inside a custom enclosure with the monitor, con
 - Arduino IDE
 - ESP32 Arduino Core
 - Embedded C++
-- HTML, CSS and JavaScript
+- HTML
+- CSS
+- JavaScript
 - WebSocket Communication
 - LittleFS File System
 - Asynchronous Web Server
@@ -98,7 +93,11 @@ The complete system is assembled inside a custom enclosure with the monitor, con
 - MQUnifiedsensor.h
 - LittleFS.h
 
+---
+
 ## ⚙️ Installation & Setup
+
+Follow these steps to run the project:
 
 1. Clone or download this repository.
 2. Open `AQI_Second_Final_Code.ino` in Arduino IDE.
@@ -125,6 +124,8 @@ The complete system is assembled inside a custom enclosure with the monitor, con
 | `/refresh` | Refresh sensor readings |
 | `/mem` | ESP32 memory information |
 
+---
+
 ## 📁 Repository Structure
 
 ```text
@@ -135,15 +136,18 @@ Smart-AQI-Monitoring-System/
 ├── .gitignore
 │
 └── assets/
-    ├── hardware-setup/
-    │   └── internal-hardware-setup.jpg
     │
     ├── dashboard-preview/
     │   └── live-dashboard-display.jpg
     │
+    ├── hardware-setup/
+    │   └── internal-hardware-setup.jpg
+    │
     └── circuit-diagrams/
         └── system-wiring-diagram.png
 ```
+
+---
 
 ## ⚠️ Important Notes
 
@@ -162,6 +166,8 @@ Smart-AQI-Monitoring-System/
 - Remote monitoring capabilities
 - Automated environmental alerts
 - Advanced data analytics
+
+---
 
 ## 👨‍💻 Author
 
