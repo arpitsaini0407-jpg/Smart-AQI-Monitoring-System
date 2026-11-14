@@ -1,105 +1,178 @@
+
 # 🌿 Smart AQI Monitoring System
 
-An ESP32-based offline air-quality monitoring project with a browser dashboard, live sensor updates, trend charts, and CSV logging.
+An ESP32-based IoT Smart Air Quality Monitoring System featuring offline monitoring, a real-time web dashboard, environmental sensors, live charts, and CSV data logging.
 
-> **Project status:** Reported as successfully working on the hardware by the project owner. The source currently provided is a single Arduino `.ino` file with the web dashboard embedded in the firmware.
+<p align="center">
+  <img src="assets/dashboard-preview/live-dashboard-display.jpg" alt="Smart AQI Monitor Working Dashboard" width="850">
+</p>
 
-## Overview
+<p align="center">
+  <b>Designed and Developed by Arpit Kumar Saini</b>
+</p>
 
-The ESP32 creates its own Wi-Fi access point and hosts a local dashboard. Sensor readings are sent to the dashboard through a WebSocket connection. The firmware also stores periodic readings in a CSV file on the ESP32's LittleFS filesystem.
+---
 
-### Features present in the supplied source
+## 📌 Project Overview
 
-- Offline Wi-Fi access point (`AQI_MONITOR`)
-- Browser-based dashboard served by the ESP32
-- Live updates over WebSocket
-- Temperature, humidity, and pressure readings from BME680
-- PM1.0, PM2.5, and PM10 readings from PMS5003
-- MQ-135-derived gas readings labelled CO₂ and NH₃ in the dashboard
-- AQI and IAQ values with category labels
-- Live sparkline charts
-- Dark/light dashboard theme toggle
-- CSV logging to LittleFS, with download and clear endpoints
-- Sensor connection indicators and free-heap display
-- Sensor read interval: 3 seconds; CSV logging interval: 60 seconds
+The Smart AQI Monitoring System is an ESP32-based IoT project designed to monitor indoor environmental conditions and air quality.
 
-## Hardware
+The ESP32 creates its own Wi-Fi access point and hosts a local web dashboard. Users can connect through a phone, tablet, or computer without requiring an internet connection.
 
-| Component | Purpose | ESP32 connection in source |
-|---|---|---|
-| ESP32 | Main controller and local web server | — |
-| BME680 | Temperature, humidity, pressure, and gas-resistance readings | SDA: GPIO 21, SCL: GPIO 22 |
-| MQ-135 | Analog gas-sensor input | Analog output: GPIO 34 |
-| PMS5003 | Particulate matter sensor | ESP32 RX2: GPIO 16, ESP32 TX2: GPIO 17 |
+Sensor readings are transmitted using WebSocket communication, displayed through live charts, and periodically stored in the ESP32 LittleFS filesystem as CSV data.
 
-**UART wiring note:** Connect PMS5003 TX to ESP32 GPIO 16 (RX2), and PMS5003 RX to ESP32 GPIO 17 (TX2), with a common ground. Confirm the sensor board's voltage and signal-level requirements before wiring.
+## ✨ Key Features
 
-## Software and libraries
+- Offline Wi-Fi Access Point
+- Real-time browser-based dashboard
+- Live sensor updates using WebSockets
+- Temperature, humidity and pressure monitoring
+- PM1.0, PM2.5 and PM10 monitoring
+- MQ-135 gas sensor readings
+- AQI and IAQ indicators
+- Live graphical trend charts
+- Dark and Light dashboard themes
+- CSV data logging
+- Download and clear CSV records
+- Sensor connection status indicators
+- ESP32 memory monitoring
 
-The source includes these libraries:
+## 🖥️ Working Dashboard
 
-- `WiFi.h` (ESP32 Arduino core)
-- `Wire.h` (Arduino core)
-- `AsyncTCP.h`
-- `ESPAsyncWebServer.h`
-- `Adafruit_BME680.h` (Adafruit BME680 library)
-- `MQUnifiedsensor.h` (MQUnifiedsensor library)
-- `LittleFS.h` (ESP32 Arduino core)
+The project dashboard displays environmental readings and graphical trends in a single interface.
 
-Install the ESP32 board support package and the external libraries using the library manager or their maintainers' installation instructions. The exact tested library and board-core versions were not included with the supplied source.
+![Working Dashboard](assets/dashboard-preview/live-dashboard-display.jpg)
 
-## Configure before uploading
+## 🔧 Hardware Components
 
-1. Open `AQI_Second_Final_Code.ino` in Arduino IDE.
-2. Select the correct ESP32 board and serial port.
-3. Set your own Wi-Fi access-point password in the `AP_PASS` constant. The repository copy intentionally uses the placeholder `CHANGE_THIS_PASSWORD`.
-4. Confirm the sensor wiring and required libraries.
-5. Compile and upload the sketch.
-6. Open the Serial Monitor at **115200 baud** and note the access-point IP printed by the ESP32.
-7. Connect a phone, tablet, or computer to the `AQI_MONITOR` Wi-Fi network using the password you configured, then open the printed IP address in a browser.
+| Component | Purpose |
+|---|---|
+| ESP32 (30-pin) | Main controller and web server |
+| BME680 | Temperature, humidity, pressure and gas resistance |
+| PMS5003 | Particulate matter monitoring |
+| MQ-135 | Gas sensing |
+| 19-inch Monitor | Dashboard display |
+| Android TV Box | Dashboard display platform |
+| Power Supply | System power |
 
-## Dashboard and data endpoints
+## 🔌 Circuit Diagram
 
-| Path | Method | Purpose |
-|---|---|---|
-| `/` | GET | Serves the dashboard |
-| `/ws` | WebSocket | Streams live sensor data |
-| `/download` | GET | Downloads the CSV log |
-| `/clear` | POST | Clears the CSV log |
-| `/refresh` | GET | Requests a sensor refresh |
-| `/mem` | GET | Returns free and total heap information |
+The following diagram illustrates the system architecture and sensor connections.
 
-The CSV log is stored at `/data.csv` in LittleFS. The firmware writes a log row approximately once per minute and recreates the file when it grows beyond 100 KB.
+![Smart AQI Circuit Diagram](assets/circuit-diagrams/system-wiring-diagram.png)
 
-## AQI and IAQ calculation note
+## 🏗️ Hardware Implementation
 
-The supplied firmware uses custom breakpoint tables for PM2.5, PM10, and the MQ-135-derived NH₃ value, then selects the highest sub-index as `final_aqi`. Its IAQ value is calculated using the BME680 gas-resistance/humidity logic, with a fallback based on the MQ-135-derived CO₂ value and PM2.5.
+The complete system is assembled inside a custom enclosure with the monitor, controller, power components and sensor connections.
 
-**These are the calculations implemented in this project source. They should not be represented as official CPCB AQI calculations or certified measurements without separate validation against the applicable standard and calibrated reference instruments.** MQ-series gas estimates are sensitive to calibration, warm-up, environmental conditions, and sensor cross-sensitivity.
+![Internal Hardware Setup](assets/hardware-setup/internal-hardware-setup.jpg)
 
-## Repository structure
+## 📡 ESP32 Pin Configuration
+
+| Sensor | ESP32 Pin |
+|---|---|
+| BME680 SDA | GPIO 21 |
+| BME680 SCL | GPIO 22 |
+| MQ-135 Analog Output | GPIO 34 |
+| PMS5003 TX | GPIO 16 (RX2) |
+| PMS5003 RX | GPIO 17 (TX2) |
+
+## 💻 Software & Technologies
+
+- Arduino IDE
+- ESP32 Arduino Core
+- Embedded C++
+- HTML, CSS and JavaScript
+- WebSocket Communication
+- LittleFS File System
+- Asynchronous Web Server
+
+### Libraries Used
+
+- WiFi.h
+- Wire.h
+- AsyncTCP.h
+- ESPAsyncWebServer.h
+- Adafruit_BME680.h
+- MQUnifiedsensor.h
+- LittleFS.h
+
+## ⚙️ Installation & Setup
+
+1. Clone or download this repository.
+2. Open `AQI_Second_Final_Code.ino` in Arduino IDE.
+3. Install ESP32 board support.
+4. Install the required libraries.
+5. Select your ESP32 board and serial port.
+6. Configure your own Wi-Fi access-point password in `AP_PASS`.
+7. Verify sensor wiring.
+8. Compile and upload the firmware.
+9. Open Serial Monitor at 115200 baud.
+10. Connect your device to the `AQI_MONITOR` Wi-Fi network.
+11. Open the IP address printed in Serial Monitor in your browser.
+
+**Note:** Configure a secure Wi-Fi password before uploading the firmware.
+
+## 📊 Dashboard Endpoints
+
+| Endpoint | Function |
+|---|---|
+| `/` | Main dashboard |
+| `/ws` | Live WebSocket data |
+| `/download` | Download CSV data |
+| `/clear` | Clear stored CSV data |
+| `/refresh` | Refresh sensor readings |
+| `/mem` | ESP32 memory information |
+
+## 📁 Repository Structure
 
 ```text
 Smart-AQI-Monitoring-System/
+│
 ├── AQI_Second_Final_Code.ino
 ├── README.md
-└── .gitignore
+├── .gitignore
+│
+└── assets/
+    ├── hardware-setup/
+    │   └── internal-hardware-setup.jpg
+    │
+    ├── dashboard-preview/
+    │   └── live-dashboard-display.jpg
+    │
+    └── circuit-diagrams/
+        └── system-wiring-diagram.png
 ```
 
-Wiring diagrams, build photographs, and dashboard screenshots can be added under an `assets/` directory when they are available.
+## ⚠️ Important Notes
 
-## Limitations and validation
+- The system is designed for local offline monitoring.
+- Sensor readings depend on calibration and environmental conditions.
+- MQ-series gas readings are estimates and can be affected by cross-sensitivity.
+- AQI/IAQ calculations in the firmware are project-specific and should not be treated as certified official measurements.
+- Verify electrical connections and sensor voltage requirements before powering the system.
+- Exact tested library versions have not yet been documented.
 
-- The source provided for this repository is a single `.ino` file; no separate web assets, PCB files, calibration records, or test report were supplied with it.
-- Sensor accuracy depends on the sensor modules, calibration, placement, warm-up, and operating conditions.
-- Verify the AQI/IAQ formulas and sensor-derived gas values before using the readings for health, compliance, or official reporting.
-- The code's exact board-core and library versions have not been documented yet.
+## 🚀 Future Improvements
 
-## License
+- Enhanced sensor calibration
+- Historical data visualization
+- Improved dashboard interface
+- Remote monitoring capabilities
+- Automated environmental alerts
+- Advanced data analytics
 
-No license has been selected for this repository yet. Until a license is added, others do not automatically receive permission to reuse, modify, or distribute the code.
+## 👨‍💻 Author
 
-## Author
+**Arpit Kumar Saini**
 
-**Arpit Kumar Saini**  
-GitHub: [@arpitsaini0407-jpg](https://github.com/arpitsaini0407-jpg)
+AI | Software | IoT Developer
+
+- GitHub: [@arpitsaini0407-jpg](https://github.com/arpitsaini0407-jpg)
+- LinkedIn: [Arpit Kumar Saini](https://www.linkedin.com/in/arpit-kumar-saini-4a4297447/)
+
+---
+
+<p align="center">
+  <b>Building Intelligent Solutions with AI, Software & IoT.</b>
+</p>
